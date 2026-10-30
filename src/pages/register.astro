@@ -1,0 +1,200 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
+
+// Set to false to close applications. The page then shows a short notice instead of the form.
+const registrationOpen = true;
+---
+
+<Layout
+  title="Apply for a place | The Logic Pipeline"
+  description="Apply for a place in a four-week online clinic that helps music postgraduates write a clear thesis argument, or ask a question first."
+>
+  <main class="container py-xl">
+    <header class="section-header">
+      <a href="/" class="nav-back">← Back to the clinic</a>
+      <h1>Apply for a place</h1>
+      <p class="summary-text">
+        Tell me a little about you and your project, and I will reply by email. A rough topic is fine. Not sure yet? Choose “I have a question”.
+      </p>
+    </header>
+
+    {registrationOpen ? (
+      <form id="intake-form" class="form-wrapper">
+        <!-- Hidden trap for automated spam. Real people never see or fill this. -->
+        <input type="text" name="security-token" style="display:none !important;" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <fieldset class="kind-choice">
+          <legend>I would like to</legend>
+          <label class="choice"><input type="radio" name="kind" value="apply" checked /> Apply for a place</label>
+          <label class="choice"><input type="radio" name="kind" value="question" /> Ask a question</label>
+        </fieldset>
+
+        <div class="form-group">
+          <label for="name">Full name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" class="input-field" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" required autocomplete="email" class="input-field" placeholder="name@university.ac.za" />
+        </div>
+
+        <div id="apply-fields" class="apply-fields">
+          <div class="form-group">
+            <label for="institution">University and department</label>
+            <input type="text" id="institution" name="institution" class="input-field" />
+          </div>
+
+          <div class="form-group">
+            <label for="stage">Where are you in your degree?</label>
+            <select id="stage" name="stage" class="input-field">
+              <option value="">Choose one</option>
+              <option>Planning my research proposal</option>
+              <option>Writing my research proposal</option>
+              <option>Writing my thesis or written commentary</option>
+              <option>Revising after feedback</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="writing">Do you already have something written?</label>
+            <select id="writing" name="writing" class="input-field">
+              <option value="">Choose one</option>
+              <option>Yes, a draft or abstract</option>
+              <option>I have notes</option>
+              <option>No, I am starting from scratch</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="timezone">Your time zone</label>
+            <input type="text" id="timezone" name="timezone" class="input-field" placeholder="For example: South African time" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message" id="message-label">Your topic in one or two sentences (rough is fine)</label>
+          <textarea id="message" name="message" rows="5" class="input-field"></textarea>
+        </div>
+
+        <div class="consent-row">
+          <input type="checkbox" id="consent" name="consent" value="yes" required />
+          <label for="consent">
+            I agree that John Oosthuizen may use these details to reply to me. See the <a href="/privacy">privacy notice</a>.
+          </label>
+        </div>
+
+        <button type="submit" id="submit-btn" class="submit-action-link">Send application</button>
+
+        <div id="status-notice" class="ui-notice-box" role="alert" style="display: none;"></div>
+      </form>
+    ) : (
+      <div class="alert-box">
+        <p>Applications are closed for now. Please email john@johnoosthuizen.com to ask about the next intake.</p>
+      </div>
+    )}
+  </main>
+</Layout>
+
+<script>
+  const form = document.getElementById('intake-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const noticeBox = document.getElementById('status-notice') as HTMLDivElement | null;
+  const applyFields = document.getElementById('apply-fields') as HTMLDivElement | null;
+  const messageLabel = document.getElementById('message-label') as HTMLLabelElement | null;
+  const message = document.getElementById('message') as HTMLTextAreaElement | null;
+
+  if (form && submitBtn && noticeBox && applyFields && messageLabel && message) {
+    const currentKind = () =>
+      (form.querySelector('input[name="kind"]:checked') as HTMLInputElement).value;
+
+    const updateMode = () => {
+      const isApply = currentKind() === 'apply';
+      applyFields.hidden = !isApply;
+      message.required = !isApply;
+      messageLabel.textContent = isApply
+        ? 'Your topic in one or two sentences (rough is fine)'
+        : 'Your question';
+      submitBtn.textContent = isApply ? 'Send application' : 'Send question';
+    };
+
+    form.querySelectorAll('input[name="kind"]').forEach((el) => el.addEventListener('change', updateMode));
+    updateMode();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const originalLabel = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      noticeBox.style.display = 'none';
+
+      try {
+        const data = new FormData(form);
+        const payload: Record<string, string> = {};
+        data.forEach((value, key) => {
+          if (typeof value === 'string') payload[key] = value;
+        });
+
+        const response = await fetch('/api/intake', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          window.location.href = '/register/thanks';
+          return;
+        }
+        throw new Error(result.error || 'The message could not be sent.');
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+        noticeBox.className = 'ui-notice-box error-state';
+        noticeBox.innerHTML =
+          '<h3>Your message was not sent</h3><p>Please check your details and try again. If it keeps failing, email <strong>john@johnoosthuizen.com</strong> instead.</p>';
+        noticeBox.style.display = 'block';
+      }
+    });
+  }
+</script>
+
+<style>
+  .py-xl { padding-top: 4rem; padding-bottom: 4rem; }
+  .section-header { margin-bottom: 2.5rem; }
+  .nav-back { font-family: var(--font-sans); font-size: var(--step-0); color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 1rem; }
+  .nav-back:hover { color: var(--text-primary); }
+  .summary-text { font-size: var(--step-1); color: var(--text-muted); max-width: 60ch; }
+
+  .form-wrapper { background: var(--bg-surface); border: 1px solid var(--border-accent); padding: 2.5rem; border-radius: 4px; max-width: 560px; }
+  .kind-choice { border: 0; padding: 0; margin: 0 0 1.75rem 0; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .kind-choice legend { font-family: var(--font-sans); font-weight: 600; margin-bottom: 0.75rem; padding: 0; }
+  .choice { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+
+  .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group label { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+  .apply-fields { display: block; }
+  .apply-fields[hidden] { display: none; }
+  .input-field { width: 100%; padding: 0.75rem; background: var(--bg-canvas); border: 1px solid var(--border-accent); color: var(--text-primary); border-radius: 4px; font-family: inherit; font-size: var(--step-0); box-sizing: border-box; }
+  .input-field:focus-visible { border-color: var(--brand-accent, #127C44); outline: 2px solid var(--brand-accent, #127C44); outline-offset: 1px; }
+  textarea.input-field { resize: vertical; }
+
+  .consent-row { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1.5rem; font-size: var(--step-0); }
+  .consent-row input { margin-top: 0.3rem; }
+
+  .submit-action-link { display: block; width: 100%; text-align: center; font-family: var(--font-sans); font-size: var(--step-0); font-weight: 600; background: var(--brand-accent, #127C44); color: #ffffff; border: 1px solid var(--brand-accent, #127C44); padding: 1rem; border-radius: 4px; cursor: pointer; transition: filter 0.2s ease; }
+  .submit-action-link:hover:not(:disabled) { filter: brightness(0.92); }
+  .submit-action-link:focus-visible { outline: 3px solid var(--text-primary); outline-offset: 2px; }
+  .submit-action-link:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .ui-notice-box { padding: 1.5rem; border-radius: 4px; margin-top: 2rem; font-size: var(--step-0); line-height: 1.6; }
+  .error-state { background: rgba(217, 119, 6, 0.06); border: 1px solid #d97706; color: var(--text-primary); }
+  .error-state :global(h3) { color: #d97706; margin-top: 0; margin-bottom: 0.5rem; font-size: var(--step-1); }
+
+  .alert-box { border-left: 3px solid var(--text-muted); padding-left: 1rem; color: var(--text-muted); }
+</style>

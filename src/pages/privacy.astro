@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
+
+// CONFIRM: how long you keep applications, and your contact address.
+const retention = 'for as long as needed to run the clinic and answer you, and then delete it';
+const contact = 'john@johnoosthuizen.com';
+---
+
+<Layout
+  title="Privacy notice | The Logic Pipeline"
+  description="What information the application form collects, why, and how you can ask me to delete it."
+>
+  <main class="container privacy">
+    <a href="/" class="nav-back">← Back to the clinic</a>
+    <h1>Privacy notice</h1>
+    <p class="updated">Last updated 30 October 2026</p>
+
+    <h2>Who I am</h2>
+    <p>
+      I am Dr John Ernst Oosthuizen. I run The Logic Pipeline and decide what happens to the information you send me. You can reach me at <a href={`mailto:${contact}`}>{contact}</a>.
+    </p>
+
+    <h2>What I collect</h2>
+    <p>
+      When you use the form, I collect your name and email address. If you apply, I also collect your university and department, your stage, whether you already have writing, your time zone, and the topic or question you write.
+    </p>
+
+    <h2>Why I collect it</h2>
+    <p>
+      Only to reply to you, and if you apply, to decide who joins a group and to run the clinic. I do not sell your information or use it for anything unrelated.
+    </p>
+
+    <h2>Who else handles it</h2>
+    <p>
+      Your message is sent by an email delivery service (Resend) to my email account, which is hosted by Google Workspace. This website is hosted by Cloudflare, which processes technical data such as your IP address to deliver the pages.
+    </p>
+
+    <h2>How long I keep it</h2>
+    <p>I keep it {retention}.</p>
+
+    <h2>Your choices</h2>
+    <p>
+      You can ask to see what I hold about you, correct it, or have it deleted. Email me and I will respond. If you are unhappy with how I handle your information, you can also complain to the Information Regulator in South Africa.
+    </p>
+  </main>
+</Layout>
+
+<style>
+  .privacy { padding-top: 4rem; padding-bottom: 5rem; max-width: 680px; }
+  .nav-back { font-family: var(--font-sans); font-size: var(--step-0); color: var(--text-muted); text-decoration: none; display: inline-block; margin-bottom: 1rem; }
+  .nav-back:hover { color: var(--text-primary); }
+  .updated { color: var(--text-muted); margin-top: 0; }
+  h2 { font-size: var(--step-2); margin-top: 2.5rem; margin-bottom: 0.75rem; }
+</style>

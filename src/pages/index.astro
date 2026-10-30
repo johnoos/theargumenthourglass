@@ -1,0 +1,370 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
+
+/* ------------------------------------------------------------------
+   EDIT HERE. Everything below is a fact only you can supply.
+   Leave a value as '' and the page shows a neutral fallback instead
+   of an empty gap or a visible placeholder.
+------------------------------------------------------------------- */
+const settings = {
+  pilotStart: '',     // e.g. 'late January 2027'
+  pilotPlaces: '',    // e.g. '4'
+  groupPrice: '',     // e.g. 'R... per student'
+  oneToOnePrice: '', // e.g. 'R... per session'
+  sessionTime: '',    // e.g. 'Thursdays at 17:00, South African time'
+  platform: '',       // e.g. 'Google Classroom and Google Meet'
+  aiPolicy: '',       // e.g. 'The sentences you submit must be your own writing.'
+  // CONFIRM before publishing: wording about Stellenbosch, IBM and your article.
+  bio: 'Dr John Oosthuizen holds a PhD in Music and has taught music theory and analysis at Stellenbosch University. He also worked as a senior enterprise architect at IBM, which shaped his habit of stating a problem, its limits and its evidence in plain terms.',
+};
+
+const or = (value: string, fallback: string) => (value.trim() ? value.trim() : fallback);
+
+const pilotLine = `Free pilot places${settings.pilotPlaces.trim() ? ` (${settings.pilotPlaces.trim()} available)` : ''}, starting ${or(settings.pilotStart, 'on a date to be confirmed')}.`;
+
+const weeks = [
+  { week: '0', focus: 'Start', write: 'Send me what you have, even rough notes.' },
+  { week: '1', focus: 'The wide opening', write: 'One sentence: what is changing in your field, and what is missing.' },
+  { week: '2', focus: 'The narrow middle', write: 'One question: your approach, your limits and your evidence.' },
+  { week: '3', focus: 'The wide base', write: 'One sentence: your answer, and why it matters.' },
+  { week: '4', focus: 'Putting it together', write: 'Read all three aloud, trim, and finish.' },
+];
+
+const problems = [
+  {
+    title: 'Zoomed in too far',
+    looks: 'A small detail with no link to the bigger picture.',
+    before: 'This study looks at bars 1 to 8 of Brahms’s Intermezzo Op. 117 No. 1.',
+    fix: 'Say why this passage matters to the wider field, and what is missing there.',
+  },
+  {
+    title: 'Apologetic padding',
+    looks: 'Hedging before you have made your point.',
+    before: 'It could perhaps be argued that analysis might possibly help performers.',
+    fix: 'Say it plainly: “Analysis can guide phrasing decisions, yet few studies show how.”',
+  },
+  {
+    title: 'The tool-name shield',
+    looks: 'Naming software or methods instead of saying what you do.',
+    before: 'Does using Sibelius, Sonic Visualiser and Schenkerian analysis help with the Brahms?',
+    fix: 'Say what you will do and what you will look at, not which tools you will use.',
+  },
+  {
+    title: 'Big problem, small fix',
+    looks: 'A large problem answered with a vague or tiny remedy.',
+    before: 'Therefore, conservatoires should offer more analysis classes.',
+    fix: 'Make your answer the same size as the problem you opened with.',
+  },
+  {
+    title: 'Word fluff',
+    looks: 'Adjectives and filler that bury your point.',
+    before: 'Many deeply passionate musicians feel that Brahms’s incredibly profound late works are truly impossible to understand.',
+    fix: 'Cut to the point: “Brahms’s late intermezzi reward close study of phrase structure.”',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Do I need a topic?',
+    a: 'A rough idea is enough. Week 0 has a route for starting from scratch.',
+  },
+  {
+    q: 'Does this replace my supervisor?',
+    a: 'No. I coach how your argument is built. Your supervisor guides the content and the field.',
+  },
+  {
+    q: 'Will you write or edit my work?',
+    a: 'No. I give scored feedback on your own sentences and help you rewrite them in the session.',
+  },
+  {
+    q: 'Can I use AI tools?',
+    a: or(settings.aiPolicy, 'The sentences you submit must be your own writing.'),
+  },
+  {
+    q: 'What do I need?',
+    a: `A computer and a stable internet connection. We use ${or(settings.platform, 'an online classroom and video calls')}.`,
+  },
+  {
+    q: 'When are the sessions?',
+    a: `${or(settings.sessionTime, 'Session times are agreed with each group')}. Ask if you are in another time zone.`,
+  },
+  {
+    q: 'What happens to my information?',
+    a: 'I use it only to run the clinic and reply to you. You can ask me to delete it at any time. Read the privacy notice for details.',
+  },
+];
+---
+
+<Layout
+  title="The Logic Pipeline | Clear thesis arguments for music postgraduates"
+  description="A four-week online clinic for music postgraduates. Groups of four. Write three sentences that state your whole argument, with scored feedback every week."
+>
+  <main class="pipeline-main">
+
+    <header class="hero-section container">
+      <div class="brand-monogram">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          style="display:block;width:64px;height:64px;fill:none;stroke:currentColor;stroke-width:1.5;margin:0 auto;"
+        >
+          <path d="M6 3h12M6 21h12M6 3l6 9 6-9M6 21l6-9 6 9" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <p class="brand-name">The Logic Pipeline</p>
+      <h1>Write a thesis argument that holds up</h1>
+      <p class="tagline">
+        A four-week online clinic for music postgraduates. Groups of four. Your own writing, scored and discussed every week.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button-primary" href="/register">Apply for a place</a>
+        <a class="button-secondary" href="#how-it-works">See how it works</a>
+      </div>
+      <p class="hero-note">{pilotLine}</p>
+    </header>
+
+    <section class="container audience-section" aria-labelledby="who-heading">
+      <h2 id="who-heading">Who it is for</h2>
+      <div class="two-col">
+        <div>
+          <ul class="plain-list">
+            <li>Performance students writing a half-thesis or written commentary</li>
+            <li>Masters and doctoral students preparing a research proposal</li>
+            <li>Theory and analysis students who want a sharper argument</li>
+            <li>Anyone who knows their topic well but cannot yet state the argument in a few clear sentences</li>
+          </ul>
+        </div>
+        <div class="note-box">
+          <h3>What it is not</h3>
+          <p>
+            It is not editing, proofreading or writing for you, and it does not replace your supervisor. I coach the structure and logic of your argument. The ideas and the work stay yours.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container leave-section" aria-labelledby="leave-heading">
+      <h2 id="leave-heading">What you leave with</h2>
+      <ol class="plain-list ordered">
+        <li>Three sentences that state your whole argument</li>
+        <li>A research question you can say aloud in one breath</li>
+        <li>A short guide to five common argument problems, and how to spot them in your own writing</li>
+        <li>A score at the start and at the end, so you can see the difference</li>
+      </ol>
+    </section>
+
+    <section class="hourglass-section container" aria-labelledby="hourglass-heading">
+      <h2 id="hourglass-heading">The hourglass in one minute</h2>
+      <p class="section-desc">
+        A good argument is balanced. It does not open with a huge claim and end with a tiny one.
+      </p>
+      <div class="hourglass-layout">
+        <svg class="hourglass-figure" viewBox="0 0 220 260" role="img" aria-label="An hourglass: wide at the top, narrow in the middle, wide at the base">
+          <path d="M30 20h160L120 130l70 110H30l70-110z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+        </svg>
+        <div class="hourglass-parts">
+          <div class="matrix-node">
+            <h3>The wide opening</h3>
+            <p>The big picture: what is changing in your field, and what is still missing from it.</p>
+          </div>
+          <div class="matrix-node active-core">
+            <h3>The narrow middle</h3>
+            <p>Exactly what you will do, within what limits, and on what evidence. This is your research question.</p>
+          </div>
+          <div class="matrix-node">
+            <h3>The wide base</h3>
+            <p>What your work shows and why it matters, at the same scale as the problem you opened with.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="coaching-section container" aria-labelledby="how-heading">
+      <h2 id="how-heading">How it works</h2>
+      <div class="table-responsive">
+        <table class="pricing-table" aria-label="The four-week programme">
+          <thead>
+            <tr><th scope="col">Week</th><th scope="col">Focus</th><th scope="col">You write</th></tr>
+          </thead>
+          <tbody>
+            {weeks.map((w) => (
+              <tr>
+                <td>{w.week}</td>
+                <td><strong>{w.focus}</strong></td>
+                <td>{w.write}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="inverted-classroom-callout">
+        <h3>Write first, then meet</h3>
+        <p>
+          Each week you write your sentence and submit it 24 hours before the live session. Your document then locks so I can read and score it. The session is for feedback and rewriting, not lectures.
+        </p>
+      </div>
+    </section>
+
+    <section class="clinic-section container" aria-labelledby="slot-heading">
+      <h2 id="slot-heading">Your 12 minutes</h2>
+      <div class="clinic-timeline-wrapper">
+        <div class="timeline-grid">
+          <div class="time-slot"><strong>Minutes 0 to 2</strong> You read your sentence aloud.</div>
+          <div class="time-slot"><strong>Minutes 2 to 5</strong> I ask questions about it.</div>
+          <div class="time-slot"><strong>Minutes 5 to 10</strong> We rewrite it together.</div>
+          <div class="time-slot"><strong>Minutes 10 to 12</strong> We check it fits with your other sentences.</div>
+        </div>
+        <p class="clinic-footnote">
+          The other three students listen and apply what they hear to their own sentence.
+        </p>
+      </div>
+    </section>
+
+    <section class="registry-section container" aria-labelledby="problems-heading">
+      <div class="section-meta">
+        <h2 id="problems-heading">Five common argument problems</h2>
+        <p class="section-desc">
+          These are the problems I look for in every sentence. The examples come from an invented half-thesis on phrasing in a Brahms intermezzo.
+        </p>
+      </div>
+      <div class="problem-grid">
+        {problems.map((p) => (
+          <article class="problem-card">
+            <h3>{p.title}</h3>
+            <p>{p.looks}</p>
+            <p class="example"><span class="example-label">Before</span> {p.before}</p>
+            <p class="example"><span class="example-label">Fix</span> {p.fix}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="container about-section" aria-labelledby="about-heading">
+      <h2 id="about-heading">About me</h2>
+      <p class="about-text">{settings.bio}</p>
+    </section>
+
+    <section class="coaching-section container" aria-labelledby="join-heading">
+      <h2 id="join-heading">Ways to join</h2>
+      <div class="table-responsive">
+        <table class="pricing-table" aria-label="Ways to join">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Detail</span></th>
+              <th scope="col">Pilot cohort</th>
+              <th scope="col">Group clinic</th>
+              <th scope="col">One-to-one</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Price</th>
+              <td>Free</td>
+              <td>{or(settings.groupPrice, 'Price on request')}</td>
+              <td>{or(settings.oneToOnePrice, 'Price on request')}</td>
+            </tr>
+            <tr>
+              <th scope="row">Group size</th>
+              <td>Up to 4 students</td>
+              <td>Up to 4 students</td>
+              <td>1 student</td>
+            </tr>
+            <tr>
+              <th scope="row">Length</th>
+              <td>4 weeks</td>
+              <td>4 weeks</td>
+              <td>Your timeline</td>
+            </tr>
+            <tr>
+              <th scope="row">Best for</th>
+              <td>Students happy to share their before-and-after scores and give honest feedback</td>
+              <td>Anyone who wants a clear argument and learns well from other people’s sentences</td>
+              <td>Close deadlines, or a proposal that needs a rewrite</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="container faq-section" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Questions</h2>
+      <div class="faq-list">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="pipeline-gateways container">
+      <div class="gate-card">
+        <h3>My qualifications and publications</h3>
+        <p>Degree documents, examiner evaluations and publications.</p>
+        <a href="/references" class="gate-link">View documents</a>
+      </div>
+
+      <div class="gate-card highlighted-gate">
+        <h3>Apply for a place</h3>
+        <p>Tell me about your project. A rough topic is fine. You can also ask a question first.</p>
+        <a href="/register" class="gate-link action-btn">Apply for a place</a>
+      </div>
+    </section>
+
+    <footer class="legal-attribution container">
+      <p>© 2026 Dr. John Ernst Oosthuizen. All rights reserved. · <a href="/privacy">Privacy notice</a></p>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  .brand-name { font-family: var(--font-sans); font-weight: 600; color: var(--text-muted); margin: 0 0 0.75rem 0; }
+  .hero-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .button-primary, .button-secondary { font-family: var(--font-sans); font-size: var(--step-0); font-weight: 600; text-decoration: none; padding: 0.9rem 1.6rem; border-radius: 4px; border: 1px solid var(--brand-accent, #127C44); }
+  .button-primary { background: var(--brand-accent, #127C44); color: #ffffff; }
+  .button-primary:hover { filter: brightness(0.92); }
+  .button-secondary { color: var(--text-primary); border-color: var(--text-primary); }
+  .button-secondary:hover { background: var(--action-hover); color: var(--action-text-hover); }
+  .button-primary:focus-visible, .button-secondary:focus-visible, .gate-link:focus-visible, summary:focus-visible { outline: 3px solid var(--brand-accent, #127C44); outline-offset: 3px; }
+  .hero-note { color: var(--text-muted); font-size: var(--step-0); margin: 0; }
+
+  .audience-section, .leave-section, .about-section, .faq-section { margin-bottom: 5rem; }
+  .audience-section h2, .leave-section h2, .about-section h2, .faq-section h2 { border-left: 2px solid var(--text-primary); padding-left: 1rem; margin-bottom: 2rem; }
+  .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: start; }
+  .plain-list { margin: 0; padding-left: 1.25rem; max-width: 62ch; }
+  .plain-list li { margin-bottom: 0.75rem; }
+  .note-box { background: var(--bg-surface); border: 1px solid var(--border-accent); padding: 1.5rem 2rem; border-radius: 4px; }
+  .note-box h3 { font-size: var(--step-1); margin-bottom: 0.5rem; }
+  .note-box p { margin: 0; color: var(--text-muted); }
+  .about-text { max-width: 62ch; font-size: var(--step-1); }
+
+  .hourglass-layout { display: grid; grid-template-columns: minmax(140px, 200px) 1fr; gap: 3rem; align-items: center; }
+  .hourglass-figure { color: var(--brand-accent, #127C44); width: 100%; max-width: 200px; margin: 0 auto; }
+  .hourglass-parts { display: grid; gap: 1.25rem; }
+  .hourglass-parts .matrix-node { padding: 1.25rem 1.5rem; }
+  .hourglass-parts .matrix-node h3 { font-size: var(--step-1); margin-bottom: 0.4rem; }
+  .hourglass-parts .matrix-node p { margin: 0; color: var(--text-muted); font-size: var(--step-0); }
+  @media (max-width: 640px) { .hourglass-layout { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .problem-card { background: var(--bg-surface); border: 1px solid var(--border-accent); padding: 1.75rem; border-radius: 4px; }
+  .problem-card h3 { font-size: var(--step-1); margin-bottom: 0.5rem; }
+  .problem-card p { margin: 0 0 0.75rem 0; font-size: var(--step-0); }
+  .example { color: var(--text-muted); }
+  .example-label { font-family: var(--font-sans); font-weight: 700; color: var(--text-primary); margin-right: 0.35rem; }
+
+  .pricing-table th[scope="row"] { background: transparent; text-transform: none; letter-spacing: 0; font-size: var(--step-0); }
+
+  .faq-list details { border-bottom: 1px solid var(--border-accent); padding: 1rem 0; max-width: 70ch; }
+  .faq-list summary { font-family: var(--font-sans); font-weight: 600; cursor: pointer; }
+  .faq-list p { margin: 0.75rem 0 0 0; color: var(--text-muted); }
+
+  .legal-attribution a { color: inherit; }
+</style>

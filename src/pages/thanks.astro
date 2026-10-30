@@ -1,0 +1,29 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+---
+
+<Layout
+  title="Thank you | The Logic Pipeline"
+  description="Your message has been sent."
+  noindex={true}
+>
+  <main class="container thanks">
+    <h1>Thank you</h1>
+    <p class="summary-text">
+      Your message has been sent. I will reply to the email address you gave me as soon as I can.
+    </p>
+    <p>
+      Nothing arrived after a few days? Check your spam folder, or email
+      <a href="mailto:john@johnoosthuizen.com">john@johnoosthuizen.com</a>.
+    </p>
+    <p><a href="/" class="back-link">Back to the clinic</a></p>
+  </main>
+</Layout>
+
+<style>
+  .thanks { padding-top: 5rem; padding-bottom: 5rem; max-width: 640px; }
+  .summary-text { font-size: var(--step-1); color: var(--text-muted); }
+  .back-link { font-family: var(--font-sans); font-weight: 600; }
+</style>
