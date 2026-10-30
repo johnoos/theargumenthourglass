@@ -1,9 +1,20 @@
 ---
 interface Props {
 	title: string;
+	description?: string;
+	noindex?: boolean;
+	image?: string;
 }
 
-const { title } = Astro.props;
+const {
+	title,
+	description = 'A four-week online clinic that helps music postgraduates write a clear, defensible thesis argument.',
+	noindex = false,
+	image = '/images/og-banner.jpg',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -13,6 +24,9 @@ const { title } = Astro.props;
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<meta property="og:image" content={imageURL} />
+		<meta property="og:image:alt" content="The Logic Pipeline: clear thesis arguments for music postgraduates" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<title>{title}</title>
 	</head>
 	<body>

@@ -34,32 +34,32 @@ const weeks = [
 
 const problems = [
   {
-    title: 'Zoomed in too far',
-    looks: 'A small detail with no link to the bigger picture.',
-    before: 'This study looks at bars 1 to 8 of Brahms’s Intermezzo Op. 117 No. 1.',
-    fix: 'Say why this passage matters to the wider field, and what is missing there.',
+    title: 'Backstory instead of the gap',
+    looks: 'The opening is history and background, and the gap never arrives.',
+    before: 'Since the early nineteenth century, piano music has developed in many directions, and Brahms’s late works have long been admired.',
+    fix: 'Start with what is missing: “Little work shows how a student pianist can use analysis to make phrasing decisions in Brahms’s late pieces.”',
   },
   {
-    title: 'Apologetic padding',
-    looks: 'Hedging before you have made your point.',
-    before: 'It could perhaps be argued that analysis might possibly help performers.',
-    fix: 'Say it plainly: “Analysis can guide phrasing decisions, yet few studies show how.”',
+    title: 'No limits',
+    looks: 'Nothing says what the study includes and what it leaves out.',
+    before: 'The study will also consider history, performance practice, psychology and other factors that may play a role.',
+    fix: 'Say what is in and what is out: “It examines my own preparation of Op. 117 No. 1 and leaves out other pianists’ recordings.”',
   },
   {
-    title: 'The tool-name shield',
-    looks: 'Naming software or methods instead of saying what you do.',
+    title: 'Big claim, small evidence',
+    looks: 'A claim much bigger than the evidence, or an answer much smaller than the problem.',
+    before: 'This study will transform how all pianists approach late Romantic music, using one student’s practice sessions.',
+    fix: 'Size the claim to the evidence: “It gives student performers a repeatable way to justify their phrasing choices.”',
+  },
+  {
+    title: 'Method named, not explained',
+    looks: 'A method or tool is named, but not what you do with it.',
     before: 'Does using Sibelius, Sonic Visualiser and Schenkerian analysis help with the Brahms?',
-    fix: 'Say what you will do and what you will look at, not which tools you will use.',
-  },
-  {
-    title: 'Big problem, small fix',
-    looks: 'A large problem answered with a vague or tiny remedy.',
-    before: 'Therefore, conservatoires should offer more analysis classes.',
-    fix: 'Make your answer the same size as the problem you opened with.',
+    fix: 'Say what goes in, what you do and what comes out: “I map the phrase structure, then record my phrasing decisions at three practice stages.”',
   },
   {
     title: 'Word fluff',
-    looks: 'Adjectives and filler that bury your point.',
+    looks: 'Padding, hedging and emotional words that bury your point.',
     before: 'Many deeply passionate musicians feel that Brahms’s incredibly profound late works are truly impossible to understand.',
     fix: 'Cut to the point: “Brahms’s late intermezzi reward close study of phrase structure.”',
   },
@@ -77,6 +77,10 @@ const faqs = [
   {
     q: 'Will you write or edit my work?',
     a: 'No. I give scored feedback on your own sentences and help you rewrite them in the session.',
+  },
+  {
+    q: 'What do you not check?',
+    a: 'Spelling, grammar and referencing, academic integrity, and whether your findings are true. I look at how your argument is built.',
   },
   {
     q: 'Can I use AI tools?',
@@ -120,6 +124,7 @@ const faqs = [
       <p class="tagline">
         A four-week online clinic for music postgraduates. Groups of four. Your own writing, scored and discussed every week.
       </p>
+      <p class="hero-credential">Dr John Oosthuizen, PhD (Music): former music theory tutor and lecturer at Stellenbosch University</p>
 
       <div class="hero-actions">
         <a class="button-primary" href="/register">Apply for a place</a>
@@ -133,7 +138,8 @@ const faqs = [
       <div class="two-col">
         <div>
           <ul class="plain-list">
-            <li>Performance students writing a half-thesis or written commentary</li>
+            <li>Fourth-year/honours music theory students writing a long assignment</li>
+            <li>Performance students writing a 'half-thesis' or written commentary</li>
             <li>Masters and doctoral students preparing a research proposal</li>
             <li>Theory and analysis students who want a sharper argument</li>
             <li>Anyone who knows their topic well but cannot yet state the argument in a few clear sentences</li>
@@ -246,9 +252,20 @@ const faqs = [
     </section>
 
     <section class="container about-section" aria-labelledby="about-heading">
-      <h2 id="about-heading">About me</h2>
-      <p class="about-text">{settings.bio}</p>
-    </section>
+  <h2 id="about-heading">About me</h2>
+  <div class="about-layout">
+    <img
+      class="about-photo"
+      src="/images/john-oosthuizen.jpg"
+      alt="Portrait of Dr John Oosthuizen"
+      width="320"
+      height="320"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="about-text">{settings.bio}</p>
+  </div>
+</section>
 
     <section class="coaching-section container" aria-labelledby="join-heading">
       <h2 id="join-heading">Ways to join</h2>
@@ -334,7 +351,7 @@ const faqs = [
   .button-secondary:hover { background: var(--action-hover); color: var(--action-text-hover); }
   .button-primary:focus-visible, .button-secondary:focus-visible, .gate-link:focus-visible, summary:focus-visible { outline: 3px solid var(--brand-accent, #127C44); outline-offset: 3px; }
   .hero-note { color: var(--text-muted); font-size: var(--step-0); margin: 0; }
-
+  .hero-credential { font-family: var(--font-sans); color: var(--text-muted); margin: 0 0 1.5rem 0; }
   .audience-section, .leave-section, .about-section, .faq-section { margin-bottom: 5rem; }
   .audience-section h2, .leave-section h2, .about-section h2, .faq-section h2 { border-left: 2px solid var(--text-primary); padding-left: 1rem; margin-bottom: 2rem; }
   .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: start; }
@@ -367,4 +384,12 @@ const faqs = [
   .faq-list p { margin: 0.75rem 0 0 0; color: var(--text-muted); }
 
   .legal-attribution a { color: inherit; }
+
+  .about-layout { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; align-items: start; }
+  .about-photo { width: 200px; height: 200px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-accent); }
+  
+  @media (max-width: 640px) {
+  .about-layout { grid-template-columns: 1fr; }
+  .about-photo { width: 160px; height: 160px; }
+}
 </style>
