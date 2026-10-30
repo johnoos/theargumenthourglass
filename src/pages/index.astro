@@ -9,15 +9,15 @@ export const prerender = true;
    of an empty gap or a visible placeholder.
 ------------------------------------------------------------------- */
 const settings = {
-  pilotStart: '',     // e.g. 'late January 2027'
-  pilotPlaces: '',    // e.g. '4'
-  groupPrice: '',     // e.g. 'R... per student'
-  oneToOnePrice: '', // e.g. 'R... per session'
-  sessionTime: '',    // e.g. 'Thursdays at 17:00, South African time'
-  platform: '',       // e.g. 'Google Classroom and Google Meet'
-  aiPolicy: '',       // e.g. 'The sentences you submit must be your own writing.'
-  // CONFIRM before publishing: wording about Stellenbosch, IBM and your article.
-  bio: 'Dr John Oosthuizen holds a PhD in Music and has taught music theory and analysis at Stellenbosch University. He also worked as a senior enterprise architect at IBM, which shaped his habit of stating a problem, its limits and its evidence in plain terms.',
+  pilotStart: 'late January 2027',     
+  pilotPlaces: '4',    
+  groupPrice: 'R1950 per student',     
+  oneToOnePrice: 'R2450', 
+  sessionTime: 'Thuesdays at 17:00, South African time',    
+  platform: 'Google Classroom and Google Meet',       
+  aiPolicy: 'The sentences you submit must be your own writing.',       
+  
+  bio: 'Dr. John Oosthuizen holds a PhD in Music and has taught music theory and analysis at Stellenbosch University. He also worked as a senior enterprise architect at IBM, which shaped his habit of stating a problem, its limits and its evidence in plain terms.',
 };
 
 const or = (value: string, fallback: string) => (value.trim() ? value.trim() : fallback);
@@ -102,7 +102,7 @@ const faqs = [
 ---
 
 <Layout
-  title="The Logic Pipeline | Clear thesis arguments for music postgraduates"
+  title="The Argument Hourglass | Clear thesis arguments for music postgraduates"
   description="A four-week online clinic for music postgraduates. Groups of four. Write three sentences that state your whole argument, with scored feedback every week."
 >
   <main class="pipeline-main">
@@ -119,12 +119,11 @@ const faqs = [
         </svg>
       </div>
 
-      <p class="brand-name">The Logic Pipeline</p>
+      <p class="brand-name">The Argument Hourglass</p>
       <h1>Write a thesis argument that holds up</h1>
       <p class="tagline">
         A four-week online clinic for music postgraduates. Groups of four. Your own writing, scored and discussed every week.
       </p>
-      <p class="hero-credential">Dr John Oosthuizen, PhD (Music): former music theory tutor and lecturer at Stellenbosch University</p>
 
       <div class="hero-actions">
         <a class="button-primary" href="/register">Apply for a place</a>
@@ -138,8 +137,7 @@ const faqs = [
       <div class="two-col">
         <div>
           <ul class="plain-list">
-            <li>Fourth-year/honours music theory students writing a long assignment</li>
-            <li>Performance students writing a 'half-thesis' or written commentary</li>
+            <li>Performance students writing a half-thesis or written commentary</li>
             <li>Masters and doctoral students preparing a research proposal</li>
             <li>Theory and analysis students who want a sharper argument</li>
             <li>Anyone who knows their topic well but cannot yet state the argument in a few clear sentences</li>
@@ -252,20 +250,9 @@ const faqs = [
     </section>
 
     <section class="container about-section" aria-labelledby="about-heading">
-  <h2 id="about-heading">About me</h2>
-  <div class="about-layout">
-    <img
-      class="about-photo"
-      src="/images/john-oosthuizen.jpg"
-      alt="Portrait of Dr John Oosthuizen"
-      width="320"
-      height="320"
-      loading="lazy"
-      decoding="async"
-    />
-    <p class="about-text">{settings.bio}</p>
-  </div>
-</section>
+      <h2 id="about-heading">About me</h2>
+      <p class="about-text">{settings.bio}</p>
+    </section>
 
     <section class="coaching-section container" aria-labelledby="join-heading">
       <h2 id="join-heading">Ways to join</h2>
@@ -351,7 +338,7 @@ const faqs = [
   .button-secondary:hover { background: var(--action-hover); color: var(--action-text-hover); }
   .button-primary:focus-visible, .button-secondary:focus-visible, .gate-link:focus-visible, summary:focus-visible { outline: 3px solid var(--brand-accent, #127C44); outline-offset: 3px; }
   .hero-note { color: var(--text-muted); font-size: var(--step-0); margin: 0; }
-  .hero-credential { font-family: var(--font-sans); color: var(--text-muted); margin: 0 0 1.5rem 0; }
+
   .audience-section, .leave-section, .about-section, .faq-section { margin-bottom: 5rem; }
   .audience-section h2, .leave-section h2, .about-section h2, .faq-section h2 { border-left: 2px solid var(--text-primary); padding-left: 1rem; margin-bottom: 2rem; }
   .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: start; }
@@ -384,12 +371,4 @@ const faqs = [
   .faq-list p { margin: 0.75rem 0 0 0; color: var(--text-muted); }
 
   .legal-attribution a { color: inherit; }
-
-  .about-layout { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; align-items: start; }
-  .about-photo { width: 200px; height: 200px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-accent); }
-  
-  @media (max-width: 640px) {
-  .about-layout { grid-template-columns: 1fr; }
-  .about-photo { width: 160px; height: 160px; }
-}
 </style>

@@ -81,11 +81,11 @@ export const POST: APIRoute = async ({ request }) => {
 
     const resend = new Resend(env.RESEND_API_KEY);
     const { error } = await resend.emails.send({
-      from: 'The Logic Pipeline <vault@johnoosthuizen.com>',
+      from: 'The Argument Hourglass <vault@johnoosthuizen.com>',
       to: ['john@johnoosthuizen.com'],
       replyTo: email,
       subject,
-      html: `<h2>The Logic Pipeline: ${heading.toLowerCase()}</h2>${tableHtml}${messageHtml}`,
+      html: `<h2>The Argument Hourglass: ${heading.toLowerCase()}</h2>${tableHtml}${messageHtml}`,
     });
 
     if (error) throw new Error(error.message);
