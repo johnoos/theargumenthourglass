@@ -252,9 +252,20 @@ const faqs = [
     </section>
 
     <section class="container about-section" aria-labelledby="about-heading">
-      <h2 id="about-heading">About me</h2>
-      <p class="about-text">{settings.bio}</p>
-    </section>
+  <h2 id="about-heading">About me</h2>
+  <div class="about-layout">
+    <img
+      class="about-photo"
+      src="/images/john-oosthuizen.jpg"
+      alt="Portrait of Dr John Oosthuizen"
+      width="320"
+      height="320"
+      loading="lazy"
+      decoding="async"
+    />
+    <p class="about-text">{settings.bio}</p>
+  </div>
+</section>
 
     <section class="coaching-section container" aria-labelledby="join-heading">
       <h2 id="join-heading">Ways to join</h2>
