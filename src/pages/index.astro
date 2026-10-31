@@ -314,13 +314,13 @@ const faqs = [
       <div class="gate-card">
         <h3>My qualifications and publications</h3>
         <p>Degree documents, examiner evaluations and publications.</p>
-        <a href="/vault" class="gate-link">View documents</a>
+        <a href="/vault" class="button-secondary">View documents</a>
       </div>
 
       <div class="gate-card highlighted-gate">
         <h3>Apply for a place</h3>
         <p>Tell me about your project. A rough topic is fine. You can also ask a question first.</p>
-        <a href="/register" class="gate-link action-btn">Apply for a place</a>
+        <a href="/register" class="button-primary">Apply for a place</a>
       </div>
     </section>
 
@@ -339,6 +339,8 @@ const faqs = [
   .button-secondary { color: var(--text-primary); border-color: var(--text-primary); }
   .button-secondary:hover { background: var(--action-hover); color: var(--action-text-hover); }
   .button-primary:focus-visible, .button-secondary:focus-visible, .gate-link:focus-visible, summary:focus-visible { outline: 3px solid var(--brand-accent, #127C44); outline-offset: 3px; }
+  .button-primary, .button-secondary { display: inline-block; min-width: 11rem; text-align: center; }
+  .gate-card .button-primary, .gate-card .button-secondary { align-self: flex-start; }
   .hero-note { color: var(--text-muted); font-size: var(--step-0); margin: 0; }
 
   .audience-section, .leave-section, .about-section, .faq-section { margin-bottom: 5rem; }
