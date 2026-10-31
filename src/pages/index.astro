@@ -169,7 +169,7 @@ const faqs = [
       </p>
       <div class="hourglass-layout">
         <svg class="hourglass-figure" viewBox="0 0 220 260" role="img" aria-label="An hourglass: wide at the top, narrow in the middle, wide at the base">
-          <path d="M30 20h160L120 130l70 110H30l70-110z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+          <path d="M30 20h160L120 130l70 110H30l70-110z" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <div class="hourglass-parts">
           <div class="matrix-node">
@@ -206,7 +206,9 @@ const faqs = [
           </tbody>
         </table>
       </div>
-      <p>These three sentences can form the basis of a research proposal, a thesis abstract, and the written part of your degree.</p>
+      <p class="payoff">
+        These three sentences can form the basis of a research proposal, a thesis abstract, and the written part of your degree.
+      </p>
       <div class="inverted-classroom-callout">
         <h3>Write first, then meet</h3>
         <p>
@@ -371,4 +373,12 @@ const faqs = [
   .faq-list p { margin: 0.75rem 0 0 0; color: var(--text-muted); }
 
   .legal-attribution a { color: inherit; }
+
+  .payoff {
+      font-size: var(--step-1);
+      max-width: 56ch;
+      margin: 2.5rem 0;
+      padding-left: 1.25rem;
+      border-left: 4px solid var(--brand-accent, #127C44);
+  }
 </style>
