@@ -81,11 +81,16 @@ export const POST: APIRoute = async ({ request }) => {
 
     const resend = new Resend(env.RESEND_API_KEY);
     const { error } = await resend.emails.send({
-      from: 'The Argument Hourglass <vault@johnoosthuizen.com>',
+      from: 'The Argument Hourglass <forms@send.johnoosthuizen.com>',
       to: ['john@johnoosthuizen.com'],
       replyTo: email,
       subject,
       html: `<h2>The Argument Hourglass: ${heading.toLowerCase()}</h2>${tableHtml}${messageHtml}`,
+      text: [
+          `${heading} from ${name}`,
+          ...rows.filter(([, value]) => value).map(([label, value]) => `${label}: ${value}`),
+          message ? `\n${message}` : '',
+].join('\n'),
     });
 
     if (error) throw new Error(error.message);
