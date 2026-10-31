@@ -148,7 +148,7 @@ const registrationOpen = true;
         const result = await response.json();
 
         if (response.ok && result.success) {
-          window.location.href = '/pages/thanks';
+          window.location.href = 'pages/thanks';
           return;
         }
         throw new Error(result.error || 'The message could not be sent.');
