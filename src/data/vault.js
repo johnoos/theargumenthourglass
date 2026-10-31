@@ -6,7 +6,7 @@ export const vaultFiles = [
   { name: "BMusHons Assignment", slug: "bmushons-assignment.pdf" },
   { name: "Academic Certificates", slug: "certs.pdf" },
   { name: "Academic Transcripts", slug: "transcripts.pdf" },
-  { name: "PhD Progress Reports", slug: "phdreports.pdf" },
+  { name: "PhD Examiners' Reports", slug: "phdreports.pdf" },
   { name: "Enterprise Architecture Credentials", slug: "ea-certs.pdf" },
   { name: "Published Books & Technical Material", slug: "books.pdf" },
   { name: "Peer-Reviewed Journal Articles", slug: "article.pdf" },
