@@ -17,7 +17,7 @@ const settings = {
   platform: 'Google Classroom and Google Meet',       
   aiPolicy: 'The sentences you submit must be your own writing.',       
   
-  bio: 'Dr. John Oosthuizen holds a PhD in Music and has taught music theory and analysis at Stellenbosch University. He also worked as a senior enterprise architect at IBM, which shaped his habit of stating a problem, its limits and its evidence in plain terms.',
+  bio: 'Dr. John Oosthuizen holds a PhD in Music and has taught music theory and analysis at Stellenbosch University. He also worked as a senior enterprise architect at IBM, which shaped his habit of stating a problem, its boundaries, and its evidence in plain terms.',
 };
 
 const or = (value: string, fallback: string) => (value.trim() ? value.trim() : fallback);
@@ -27,7 +27,7 @@ const pilotLine = `Free pilot places${settings.pilotPlaces.trim() ? ` (${setting
 const weeks = [
   { week: '0', focus: 'Start', write: 'Send me what you have, even rough notes.' },
   { week: '1', focus: 'The wide opening', write: 'One sentence: what is changing in your field, and what is missing.' },
-  { week: '2', focus: 'The narrow middle', write: 'One question: your approach, your limits and your evidence.' },
+  { week: '2', focus: 'The narrow middle', write: 'One question: your approach, your boundaries, and your evidence.' },
   { week: '3', focus: 'The wide base', write: 'One sentence: your answer, and why it matters.' },
   { week: '4', focus: 'Putting it together', write: 'Read all three aloud, trim, and finish.' },
 ];
@@ -40,7 +40,7 @@ const problems = [
     fix: 'Start with what is missing: “Little work shows how a student pianist can use analysis to make phrasing decisions in Brahms’s late pieces.”',
   },
   {
-    title: 'No limits',
+    title: 'No boundaries',
     looks: 'Nothing says what the study includes and what it leaves out.',
     before: 'The study will also consider history, performance practice, psychology and other factors that may play a role.',
     fix: 'Say what is in and what is out: “It examines my own preparation of Op. 117 No. 1 and leaves out other pianists’ recordings.”',
@@ -178,7 +178,7 @@ const faqs = [
           </div>
           <div class="matrix-node active-core">
             <h3>The narrow middle</h3>
-            <p>Exactly what you will do, within what limits, and on what evidence. This is your research question.</p>
+            <p>Exactly what you will do, within what boundaries, and on what evidence. This is your research question.</p>
           </div>
           <div class="matrix-node">
             <h3>The wide base</h3>
